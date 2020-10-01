@@ -2,7 +2,7 @@
 const Train = require("../models/Trains")
 
 //Initialising Trains
-async function initialiseTrains(count, interval){
+async function initialiseTrains(count, interval, line){
     let base = 0;
     try{
         while(base !== -1*count){
@@ -18,7 +18,8 @@ async function initialiseTrains(count, interval){
                 initTime : interval*base,
                 maxCapacity : 50,
                 currCapacity : 0,
-                position : 0
+                position : 0,
+                line : line
             };
             newTrain = new Train(trainAttributes);
             await newTrain.save();
@@ -30,6 +31,20 @@ async function initialiseTrains(count, interval){
     }
 }
 
+//Getting All Trains
+async function GetAllTrains(line){
+    try{
+        let Trains = await Trains.find({line:line})
+        if(Trains.length <= 0 ){
+            return []
+        }
+        return Trains
+    }catch (e){
+        console.log(e.message);
+    }
+}
+
 module.exports = {
-    initialiseTrains
+    initialiseTrains,
+    GetAllTrains
 }

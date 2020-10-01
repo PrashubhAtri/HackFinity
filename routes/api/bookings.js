@@ -1,8 +1,10 @@
-const { Router } = require('express');
-const { check, validationResult } = require('express-validator');
-const axios = require('axios');
+const { Router } = require('express')
+const { check, validationResult } = require('express-validator')
+const axios = require('axios')
 
 const { Penalty } = require('../../utils/Bookings')
+const { GetSystemTime } = require('../../utils/SystemTime')
+const { GetAllTrains } = require('../../utils/Trains')
 
 const User = require('../../models/User');
 
@@ -23,6 +25,16 @@ route.get('/', [
         return res.status(400).json({errors:errors.array()})
     }
     try {
+        //Train Check and Reservation
+        let initialTime = GetSystemTime();
+        let d = new Date;
+        let currentTime = d.getTime();
+        let TimeELapsed = parseInt(((currentTime - initialTime)/1000)/60) % 1440;
+        let Trains = GetAllTrains("yellow");
+        if(Trains.length === 0){
+            return res.send("No Trains Available")
+        }
+        //TODO map the Trains and decide which one to fill
         //Getting the user
         let user = await User.findById(req.user.id);
         if(!user){

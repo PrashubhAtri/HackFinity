@@ -13,6 +13,9 @@ const connectDB = require('./data/db');
 //Trains
 const {initialiseTrains} = require("./utils/Trains")
 
+//Set Time of Start
+const { SetSystemTime } = require('./utils/SystemTime')
+
 //PassportJS
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -22,11 +25,13 @@ const User = require("./models/User");
 
 // database connect
 connectDB();
-initialiseTrains(10,2);
+
+//Setting Up the Trains
+initialiseTrains(10,2,"yellow");
 
 let d = new Date();
-let initTime = d.getTime()
-console.log(initTime)
+let init = d.getTime();
+SetSystemTime(init);
 
 //app setup
 app.set("view engine","ejs");
@@ -51,9 +56,12 @@ app.use((req,res,next) => {
 	next();
 })
 
+//Base Display Route
 app.get("/",(req,res) => {
 	res.render("home",{currentUser:req.user});
 })
+
+//Register Routes
 app.get("/register",(req,res) => {
 	res.render("register")
 });
@@ -69,6 +77,7 @@ app.post("/register",(req,res) => {
 		})
 	})
 })
+
 //LOGIN ROUTES
 app.get("/login",(req,res) => {
 	res.render("login")
@@ -77,6 +86,7 @@ app.post("/login",passport.authenticate("local",{
 	successRedirect:"/secret",
 	failureRedirect:"/login"
 }),(req,res) => {});
+
 //LOGOUT ROUTES
 app.get("/logout",(req,res) => {
 	req.logout();

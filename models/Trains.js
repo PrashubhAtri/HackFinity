@@ -7,7 +7,6 @@ const TrainSchema = new mongoose.Schema({
     },
     initTime:{
         type : Number,
-        unique : true,
         required : true
     },
     maxCapacity:{
@@ -22,6 +21,9 @@ const TrainSchema = new mongoose.Schema({
     position : {
         type : Number,
         default: 0
+    },
+    line : {
+        type : String
     }
 })
 
