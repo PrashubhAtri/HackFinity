@@ -1,9 +1,9 @@
 const { Router } = require('express')
 
+const BookingsRoute = require('./bookings').route
+
 const route = Router()
 
-route.get('/',(req,res)=>{
-    return res.send("Successful API")
-})
+route.use('/bookings',BookingsRoute)
 
 module.exports = { route }
