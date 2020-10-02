@@ -1,7 +1,7 @@
 const { Router } = require('express')
 
 const BookingsRoute = require('./bookings').route
-const FareRoute = require('./bookings').route
+const FareRoute = require('./fare').route
 
 const route = Router()
 

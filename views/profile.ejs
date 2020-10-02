@@ -96,7 +96,7 @@
                                   <option value="huda city centre">Huda City Centre</option>
                                 </select>
                               </div>
-                            <button type="button" style="width: 100%; border: 0px; background-color: rgb(236, 151, 22);"
+                            <button style="width: 100%; border: 0px; background-color: rgb(236, 151, 22);"
                                 class="btn btn-primary">Calculate Fare</button>
                         </form>
                     </div>
@@ -135,7 +135,7 @@
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title" id="exampleModalLabel">Your Bookings</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <button class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
@@ -143,22 +143,22 @@
 									<%if(user.booking.length == 0){%>
 										<h4>No bookings yet.</h4>
 									<%}else{%>
-										<h4>INITIAL STATION: <%=b.iStation%></h4>
-									  <h4>FINAL STATION: <%=b.fStation%></h4>
-									  <h4>FARE: <%=b.fare%></h4>
+										<h4>INITIAL STATION: <%=user.booking[0].iStation%></h4>
+									  <h4>FINAL STATION: <%=user.booking[0].fStation%></h4>
+									  <h4>FARE: <%=user.booking[0].fare%></h4>
 									<%}%>
                                   
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <button type="button" class="btn btn-primary" style="background-color: red;">Cancel Booking</button>
+                                  <button  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button  class="btn btn-primary" style="background-color: red;">Cancel Booking</button>
                                 </div>
                               </div>
                             </div>
                           </div>
                     </div>
                     <div>
-                        <a href="/api/booking" type="submit"
+                        <a href="/api/bookings" type="submit"
                             style="width: 100%; border: 0px ; background-color: rgb(236, 151, 22); "
                             class="btn btn-primary">MAKE A BOOKING!</a>
                     </div>
@@ -168,8 +168,7 @@
                 </div>
 
             </div>
-        </div>
-    </div>
+    
 
 
 <%- include("partials/footer") %>     
