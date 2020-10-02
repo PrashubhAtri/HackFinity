@@ -83,6 +83,9 @@ route.post('/', [
             fare : fare,
             trainIdx : TrainPrescribed
         }
+        if(user.booking.length > 0) {
+            return res.send("Not Allowed more than one bookings at a time.")
+        }
         user.booking.unshift(commute);
         //Deducting the Fare
         user.balance -= fare;
