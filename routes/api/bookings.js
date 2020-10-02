@@ -18,7 +18,6 @@ const route = Router();
 const CHARGEPERSTATION = config.get('CHARGEPERSTATION');
 const INTERCHANGECHARGES = config.get('INTERCHANGECHARGES');
 const PENALTY = config.get('PENALTY');
-const TRAINSTATIONS = config.get('TRAINSTATIONS');
 const TIMEINTERVAL = config.get('TIMEINTERVAL');
 
 //Post Route for Booking a Slot
@@ -81,7 +80,12 @@ route.post('/', [
         await user.save();
         await TrainBooked.save();
         //returning Successfully on completion
-        res.send("Successfully Booked The Seat.")
+        let value = {
+            path : Data.path,
+            fare : fare,
+            train : TrainBooked.name
+        }
+        res.json(value)
     } catch (err) {
         console.error(err.message)
         return res.status(500).send("Server Error")
