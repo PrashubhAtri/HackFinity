@@ -3,11 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="94d6fcfa-e3c4-44f4-8f02-f10520cddade" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/default.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/default.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/System.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/System.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api/bookings.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/bookings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/SystemTime.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/SystemTime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/Trains.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Trains.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +64,11 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\WORK\Hackfinity\client\src" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -82,6 +86,7 @@
       <workItem from="1601621656758" duration="5602000" />
       <workItem from="1601645119023" duration="2892000" />
       <workItem from="1601649179226" duration="2929000" />
+      <workItem from="1601654047488" duration="6867000" />
     </task>
     <servers />
   </component>
@@ -92,6 +97,10 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.md" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1066" y="201" key="#Inspections" timestamp="1601655558571">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1066" y="201" key="#Inspections/0.0.1920.1040@0.0.1920.1040" timestamp="1601655558571" />
     <state x="552" y="160" key="#Plugins" timestamp="1601622426936">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

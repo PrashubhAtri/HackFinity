@@ -108,7 +108,7 @@ app.get("/logout",(req,res) => {
 //API routes
 app.use('/api', apiRoute)
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5555;
 
 app.listen(PORT, process.env.IP, () => {
 	console.log(`App Started at http://localhost:${PORT}`);

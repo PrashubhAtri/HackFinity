@@ -36,10 +36,13 @@ async function initialiseTrains(count, interval, line){
 //Getting All Trains
 async function GetAllTrains(line){
     try{
+        console.log("here1")
         let Trains = await Train.find({line:line})
+        console.log("here2")
         if(Trains.length <= 0 ){
             return []
         }
+        console.log("here3")
         return Trains
     }catch (e){
         console.log(e.message);

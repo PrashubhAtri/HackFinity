@@ -5,8 +5,8 @@ const config = require('config')
 
 //Functions
 const { Penalty } = require('../../utils/Bookings')
-const { GetSystemTime } = require('../../utils/SystemTime')
-const { GetAllTrains } = require('../../utils/Trains')
+// const { GetSystemTime } = require('../../utils/SystemTime')
+// const { GetAllTrains } = require('../../utils/Trains')
 
 //Models
 const User = require('../../models/User');
@@ -39,19 +39,25 @@ route.post('/', [
     }
     try {
         //Train Check and Reservation
-        let initialTime = GetSystemTime();
+        let sys = await System.findOne({name : "HackFinity"})
+        let initialTime = sys.time;
         let d = new Date;
         let currentTime = d.getTime();
-        let interval = req.body.timedifference;
+        let interval = (req.body.timedifference)*60*1000;
         let TimeELapsed = parseInt((currentTime + interval - initialTime) / 60000) % 1440;
-        let Trains = GetAllTrains("yellow");
+        let Trains = await Train.find({line : "yellow"});
         if(Trains.length === 0){
             return res.send("No Trains Available")
         }
         let Positions = Trains.map((train)=>{return(((train.initTime + TimeELapsed)/TIMEINTERVAL)%TOTALSTATIONS)});
-        let Station = req.body.initialStation;
+        let Station = 0;
         let TrainPrescribed = Positions.map((pos)=>{return(pos <= Station)}).indexOf(true);
         let TrainBooked = await Train.findOne({index : TrainPrescribed});
+        if(!TrainBooked){
+            res.send("No Train Found");
+            return
+        }
+        console.log(TrainBooked)
         if(TrainBooked.currCapacity >= TrainBooked.maxCapacity){
             res.send("Train Already at Max Capacity.")
         }
