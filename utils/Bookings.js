@@ -1,5 +1,7 @@
+const config = require('config')
+
 //Default Limits
-const LIMIT = 2;
+const LIMIT = config.get('LimitOfBooking');
 
 //Checking for Penalties
 function Penalty(count){

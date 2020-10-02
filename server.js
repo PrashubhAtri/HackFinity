@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const config = require('config')
 
 const app = express();
 
@@ -27,7 +28,11 @@ const User = require("./models/User");
 connectDB();
 
 //Setting Up the Trains
-initialiseTrains(10,2,"yellow");
+const numberOfTrains = config.get('numberOfTrains');
+const TIMEINTERVAL = config.get('TIMEINTERVAL');
+const LINE = "yellow";
+initialiseTrains(numberOfTrains,TIMEINTERVAL,LINE);
+
 
 let d = new Date();
 let init = d.getTime();

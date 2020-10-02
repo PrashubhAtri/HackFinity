@@ -1,3 +1,10 @@
 {
-  "ClusterURI" : "mongodb://localhost:27017/hackfinity"
+  "ClusterURI" : "mongodb://localhost:27017/hackfinity",
+  "CHARGEPERSTATION" : 2,
+  "INTERCHANGECHARGES" : 5,
+  "PENALTY" : 25,
+  "TRAINSTATIONS" : 20,
+  "TIMEINTERVAL" : 2,
+  "LimitOfBooking" : 2,
+  "numberOfTrains" : 10
 }

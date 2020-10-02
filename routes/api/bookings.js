@@ -1,25 +1,35 @@
 const { Router } = require('express')
 const { check, validationResult } = require('express-validator')
 const axios = require('axios')
+const config = require('config')
 
+//Functions
 const { Penalty } = require('../../utils/Bookings')
 const { GetSystemTime } = require('../../utils/SystemTime')
 const { GetAllTrains } = require('../../utils/Trains')
 
+//Models
 const User = require('../../models/User');
 const Train = require('../../models/Trains')
 
 const route = Router();
 
 //Constants
-const CHARGEPERSTATION = 2;
-const INTERCHANGECHARGES = 5;
-const PENALTY = 25;
-const TRAINSTATIONS = 20;
-const TIMEINTERVAL = 2;
+const CHARGEPERSTATION = config.get('CHARGEPERSTATION');
+const INTERCHANGECHARGES = config.get('INTERCHANGECHARGES');
+const PENALTY = config.get('PENALTY');
+const TRAINSTATIONS = config.get('TRAINSTATIONS');
+const TIMEINTERVAL = config.get('TIMEINTERVAL');
 
-//TODO change to post
-route.get('/', [
+//Post Route for Booking a Slot
+/*
+    Body Requirement : {
+        initialStation : the Starting Station of the Journey,
+        finalStation : the Ending Station of the Journey,
+        timedifference : the time after the current time the slot is needed,
+    }
+*/
+route.post('/', [
     check('initialStation', 'Initial Station Field is Required').not().isEmpty(),
     check('finalStation', 'Final Station Field is Required').not().isEmpty()
 ],async (req, res)=>{
@@ -70,7 +80,7 @@ route.get('/', [
         //Saving to the DataBase
         await user.save();
         await TrainBooked.save();
-        //returning the updated user
+        //returning Successfully on completion
         res.send("Successfully Booked The Seat.")
     } catch (err) {
         console.error(err.message)
@@ -78,8 +88,11 @@ route.get('/', [
     }
 })
 
-//TODO change to post
-route.get('/cancel', async (req, res)=>{
+//Delete Route for Cancellation
+/*
+    Body Requirement : None
+*/
+route.delete('/cancel', async (req, res)=>{
     try {
         //Getting the user
         let user = await User.findById(req.user.id);
