@@ -67,18 +67,25 @@ app.get("/",(req,res) => {
 })
 
 //Register Routes
-app.get("/register",(req,res) => {
-	res.render("register")
+app.get("/show/:id",(req,res) => {
+	User.findById(req.params.id,function(err,user){
+		if(err){
+			console.log(err);
+			res.redirect("/");
+		}else{
+			res.render("profile",{user:user});
+		}
+	})
 });
 app.post("/register",(req,res) => {
 	let newUser = new User({username:req.body.username, card:req.body.card});
 	User.register(newUser, req.body.password, (err,user) => {
 		if(err){
 			console.log(err);
-			return res.redirect("/register")
+			return res.redirect("/")
 		}
 		passport.authenticate("local")(req,res,() => {
-			res.redirect("/secret");
+			res.redirect("/show/"+user._id);
 		})
 	})
 })
@@ -88,16 +95,17 @@ app.get("/login",(req,res) => {
 	res.render("home")
 });
 app.post("/login",passport.authenticate("local",{
-	successRedirect:"/secret",
-	failureRedirect:"/login"
-}),(req,res) => {});
-app.get("/profile",(req,res)=>{
-	res.render("profile");
-});
+	failureRedirect:"/"
+	}),(req,res) => {
+	res.redirect("/show/"+req.user._id);
+	});
+// app.get("/profile",(req,res)=>{
+// 	res.render("profile");
+// });
 //LOGOUT ROUTES
 app.get("/logout",(req,res) => {
 	req.logout();
-	res.redirect("back");
+	res.redirect("/");
 })
 
 //debugging routes
@@ -108,7 +116,7 @@ app.get("/logout",(req,res) => {
 //API routes
 app.use('/api', apiRoute)
 
-const PORT = process.env.PORT || 5555;
+const PORT = process.env.PORT || 5555 ||3000;
 
 app.listen(PORT, process.env.IP, () => {
 	console.log(`App Started at http://localhost:${PORT}`);

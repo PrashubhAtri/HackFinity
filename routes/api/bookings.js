@@ -29,6 +29,9 @@ const TOTALSTATIONS = config.get('TOTALSTATIONS');
         timedifference : the time after the current time the slot is needed,
     }
 */
+route.get("/", function(req,res){
+	res.render("booking");
+})
 route.post('/', [
     check('initialStation', 'Initial Station Field is Required').not().isEmpty(),
     check('finalStation', 'Final Station Field is Required').not().isEmpty()
