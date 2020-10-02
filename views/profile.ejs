@@ -7,7 +7,7 @@
                     <h1>WELCOME TO DELHI METRO INSTANT SLOT BOOKING SYSTEM</h1>
                 </div>
                 <div class="row">
-                    <img src="imgs/yellow map1.jpg" style="width: 90%;">
+                    <img src="../imgs/yellow map1.jpg" style="width: 90%;">
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -111,13 +111,13 @@
                 <div class="row">
 
                     <div class="card text-center" style="width: 100%;  border-radius: 10px; box-shadow: 2px 2px 10px grey; ">
-                        <img class="card-img-top" src="imgs/iavatar.png" alt="Card image cap" style="width: 150px; position: relative; margin-top: 100px; margin: auto;  height: 150px; border-radius: 50%;">
+                        <img class="card-img-top" src="../imgs/iavatar.png" alt="Card image cap" style="width: 150px; position: relative; margin-top: 100px; margin: auto;  height: 150px; border-radius: 50%;">
                         <div class="card-body" >
-                          <h4 class="card-title">Rishabh</h4>
-                          <h5>Smart card number: <span>234567896</span></h5>
-                          <h5>Account Balance:<span>&#8377 100</span></h5>
-                          <h5>Penalty:<span>&#8377 0</span></h5>
-                          <h5>Prior Bookings:<span> N/A </span></h5>
+                          <h4 class="card-title"><%=user.username%></h4>
+                          <h5>Smart card number: <span><%=user.card%></span></h5>
+                          <h5>Account Balance:<span>&#8377 <%=user.balance%></span></h5>
+                          <h5>Penalty:<span>&#8377 <%=user.penalty%></span></h5>
+                          <h5>Prior Bookings:<span> <%=user.booking.length%></span></h5>
     
                         </div>
                       </div>
@@ -140,8 +140,14 @@
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                  <h4>STATIONS: </h4>
-                                  <h4>TIME SLOT: </h4>
+									<%if(user.booking.length == 0){%>
+										<h4>No bookings yet.</h4>
+									<%}else{%>
+										<h4>INITIAL STATION: <%=b.iStation%></h4>
+									  <h4>FINAL STATION: <%=b.fStation%></h4>
+									  <h4>FARE: <%=b.fare%></h4>
+									<%}%>
+                                  
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -152,7 +158,7 @@
                           </div>
                     </div>
                     <div>
-                        <a href="booking.html" type="submit"
+                        <a href="/api/booking" type="submit"
                             style="width: 100%; border: 0px ; background-color: rgb(236, 151, 22); "
                             class="btn btn-primary">MAKE A BOOKING!</a>
                     </div>

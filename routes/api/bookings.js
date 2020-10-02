@@ -21,6 +21,9 @@ const PENALTY = config.get('PENALTY');
 const TRAINSTATIONS = config.get('TRAINSTATIONS');
 const TIMEINTERVAL = config.get('TIMEINTERVAL');
 
+route.get("/", function(req,res){
+	res.render("booking");
+})
 //Post Route for Booking a Slot
 /*
     Body Requirement : {
@@ -72,6 +75,7 @@ route.post('/', [
             iStation : req.body.initialStation,
             fStation : req.body.finalStation,
             fare : fare,
+			timedifference :req.body.timedifference,
             trainIdx : TrainPrescribed
         }
         user.booking.unshift(commute);

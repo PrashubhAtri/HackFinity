@@ -21,7 +21,8 @@ var userSchema = new mongoose.Schema({
 			iStation:String,
 			fStation:String,
 			fare:Number,
-			trainIdx:Number
+			trainIdx:Number,
+			timeddifference:Number
 		}
 	]
 });

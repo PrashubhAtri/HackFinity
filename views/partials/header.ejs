@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delhi Metro</title>
-    <link rel="icon" href="imgs/logo.png" type="image/x-icon">
+    <link rel="icon" href="../imgs/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
@@ -13,19 +13,21 @@
 
 <body>
 
-    <nav class="navbar navbar-light fixed bg-light">
+    <nav class="navbar navbar-light fixed bg-light navbar-expand-md">
         <a class="navbar-brand" href="#">
-            <img src="imgs/logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+            <img src="../imgs/logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
             Delhi Metro Booking System
         </a>
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			  <ul class="nav navbar-nav navbar-right">
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+        </button>
+		<div class="collapse navbar-collapse " id="navLinks">
+			  <ul class="nav navbar-nav ml-auto">
 				<% if(!currentUser){ %>
-					<li><a href="/login">Login</a></li>
-					<li><a href="/register">SignUp</a></li>
+					<li class="nav-item"><a href="/login" style="margin:10px;">Login</a></li>
 				<%}else{%>
-				  <li><a href="#">Signed In As <%=currentUser.username%></a></li>
-					<li><a href="/logout">Logout</a></li>
+				  <li class="nav-item"><a href="#" style="margin:10px;">Signed In As <%=currentUser.username%></a></li>
+					<li class="nav-item"><a href="/logout" style="margin:10px;">Logout</a></li>
 				<%}%>
 			  </ul>
 			</div>
