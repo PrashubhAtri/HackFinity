@@ -22,6 +22,9 @@ const TrainSchema = new mongoose.Schema({
         type : Number,
         default: 0
     },
+    index : {
+        type : Number
+    },
     line : {
         type : String
     }

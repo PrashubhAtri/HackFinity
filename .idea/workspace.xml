@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="94d6fcfa-e3c4-44f4-8f02-f10520cddade" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/Trains.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/Trains.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api/bookings.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/bookings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/login.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/logout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/register.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/Trains.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Trains.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,14 +77,22 @@
       <workItem from="1601533086187" duration="129000" />
       <workItem from="1601533225929" duration="7000" />
       <workItem from="1601539145363" duration="8006000" />
-      <workItem from="1601571264794" duration="13819000" />
+      <workItem from="1601571264794" duration="13897000" />
+      <workItem from="1601621656758" duration="3513000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.md" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="160" key="#Plugins" timestamp="1601622426936">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="160" key="#Plugins/0.0.1920.1040@0.0.1920.1040" timestamp="1601622426936" />
     <state x="250" y="313" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601560815464">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

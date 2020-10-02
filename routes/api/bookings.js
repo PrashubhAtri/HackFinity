@@ -7,6 +7,7 @@ const { GetSystemTime } = require('../../utils/SystemTime')
 const { GetAllTrains } = require('../../utils/Trains')
 
 const User = require('../../models/User');
+const Train = require('../../models/Trains')
 
 const route = Router();
 
@@ -14,6 +15,8 @@ const route = Router();
 const CHARGEPERSTATION = 2;
 const INTERCHANGECHARGES = 5;
 const PENALTY = 25;
+const TRAINSTATIONS = 20;
+const TIMEINTERVAL = 2;
 
 //TODO change to post
 route.get('/', [
@@ -29,18 +32,26 @@ route.get('/', [
         let initialTime = GetSystemTime();
         let d = new Date;
         let currentTime = d.getTime();
-        let TimeELapsed = parseInt(((currentTime - initialTime)/1000)/60) % 1440;
+        let interval = req.body.timedifference;
+        let TimeELapsed = parseInt((currentTime + interval - initialTime) / 60000) % 1440;
         let Trains = GetAllTrains("yellow");
         if(Trains.length === 0){
             return res.send("No Trains Available")
         }
-        //TODO map the Trains and decide which one to fill
+        let Positions = Trains.map((train)=>{return((train.initTime + TimeELapsed)/TIMEINTERVAL)});
+        let Station = req.body.initialStation;
+        let TrainPrescribed = Positions.map((pos)=>{return(pos <= Station)}).indexOf(true);
+        let TrainBooked = await Train.findOne({index : TrainPrescribed});
+        if(TrainBooked.currCapacity >= TrainBooked.maxCapacity){
+            res.send("Train Already at Max Capacity.")
+        }
+        TrainBooked.currCapacity++;
         //Getting the user
         let user = await User.findById(req.user.id);
         if(!user){
             return res.send("User Not Found");
         }
-        //Registering the booking
+        //Registering the booking and calculating the fare
         const uri = encodeURI(
             `https://delhimetroapi.herokuapp.com/metroapi/from=${req.body.initialStation}&to=${req.body.finalStation}`
         )
@@ -50,15 +61,17 @@ route.get('/', [
         let commute = {
             iStation : req.body.initialStation,
             fStation : req.body.finalStation,
-            fare : fare
+            fare : fare,
+            trainIdx : TrainPrescribed
         }
         user.booking.unshift(commute);
         //Deducting the Fare
         user.balance -= fare;
         //Saving to the DataBase
         await user.save();
+        await TrainBooked.save();
         //returning the updated user
-        res.json(user)
+        res.send("Successfully Booked The Seat.")
     } catch (err) {
         console.error(err.message)
         return res.status(500).send("Server Error")
@@ -78,11 +91,16 @@ route.get('/cancel', async (req, res)=>{
         if(guilty){
             user.Penalty += PENALTY;
         }
+        //Similarly Vacating the Train
+        let TrainIdx = user.booking[0].trainIdx;
+        let train = await Train.findOne({index : TrainIdx});
+        train.currCapacity--;
         // Unregistering the Booking
         user.booking = [];
         user.faults += 1;
         //Saving the changes to DataBase
         await user.save();
+        await train.save();
     } catch (err) {
         console.error(err.message)
         return res.status(500).send("Server Error")

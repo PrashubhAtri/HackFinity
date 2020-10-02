@@ -4,6 +4,7 @@ const Train = require("../models/Trains")
 //Initialising Trains
 async function initialiseTrains(count, interval, line){
     let base = 0;
+    let index = 0;
     try{
         while(base !== -1*count){
             let idx = (count + base);
@@ -19,11 +20,12 @@ async function initialiseTrains(count, interval, line){
                 maxCapacity : 50,
                 currCapacity : 0,
                 position : 0,
-                line : line
+                line : line,
+                index : index
             };
             newTrain = new Train(trainAttributes);
             await newTrain.save();
-            base--;
+            base--;index++;
         }
         console.log("Trains Initialised");
     }catch (e){
@@ -34,7 +36,7 @@ async function initialiseTrains(count, interval, line){
 //Getting All Trains
 async function GetAllTrains(line){
     try{
-        let Trains = await Trains.find({line:line})
+        let Trains = await Train.find({line:line})
         if(Trains.length <= 0 ){
             return []
         }

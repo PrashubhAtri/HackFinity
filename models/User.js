@@ -20,7 +20,8 @@ var userSchema = new mongoose.Schema({
 		{
 			iStation:String,
 			fStation:String,
-			fare:Number
+			fare:Number,
+			trainIdx:Number
 		}
 	]
 });
