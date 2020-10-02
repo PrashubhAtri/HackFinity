@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
-//Describing the Train
+//Describing the System
 const SystemSchema = new mongoose.Schema({
     time : {
-        type : number
+        type : Number
     },
     name : {
         type: String,
@@ -12,4 +12,4 @@ const SystemSchema = new mongoose.Schema({
     }
 })
 
-module.exports = Train = mongoose.model('system', SystemSchema)
+module.exports = System = mongoose.model('system', SystemSchema)

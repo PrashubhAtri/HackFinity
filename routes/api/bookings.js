@@ -19,6 +19,7 @@ const CHARGEPERSTATION = config.get('CHARGEPERSTATION');
 const INTERCHANGECHARGES = config.get('INTERCHANGECHARGES');
 const PENALTY = config.get('PENALTY');
 const TIMEINTERVAL = config.get('TIMEINTERVAL');
+const TOTALSTATIONS = config.get('TOTALSTATIONS');
 
 //Post Route for Booking a Slot
 /*
@@ -47,7 +48,7 @@ route.post('/', [
         if(Trains.length === 0){
             return res.send("No Trains Available")
         }
-        let Positions = Trains.map((train)=>{return((train.initTime + TimeELapsed)/TIMEINTERVAL)});
+        let Positions = Trains.map((train)=>{return(((train.initTime + TimeELapsed)/TIMEINTERVAL)%TOTALSTATIONS)});
         let Station = req.body.initialStation;
         let TrainPrescribed = Positions.map((pos)=>{return(pos <= Station)}).indexOf(true);
         let TrainBooked = await Train.findOne({index : TrainPrescribed});
