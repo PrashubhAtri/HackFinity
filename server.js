@@ -85,13 +85,15 @@ app.post("/register",(req,res) => {
 
 //LOGIN ROUTES
 app.get("/login",(req,res) => {
-	res.render("login")
+	res.render("home")
 });
 app.post("/login",passport.authenticate("local",{
 	successRedirect:"/secret",
 	failureRedirect:"/login"
 }),(req,res) => {});
-
+app.get("/profile",(req,res)=>{
+	res.render("profile");
+});
 //LOGOUT ROUTES
 app.get("/logout",(req,res) => {
 	req.logout();
@@ -99,9 +101,9 @@ app.get("/logout",(req,res) => {
 })
 
 //debugging routes
-app.get("/secret",(req,res) => {
-	res.render("secret");
-})
+// app.get("/secret",(req,res) => {
+// 	res.render("secret");
+// })
 
 //API routes
 app.use('/api', apiRoute)

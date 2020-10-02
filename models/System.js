@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 //Describing the Train
 const SystemSchema = new mongoose.Schema({
     time : {
-        type : number
+        type : Number
     },
     name : {
         type: String,

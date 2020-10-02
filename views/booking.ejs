@@ -1,19 +1,25 @@
-<%- include("partials/header") %>   
+<%- include("partials/header") %> 
 
-    <!-- main body -->
-    <div class="container" style="padding-top: 50px; ">
+    <div class="container" style="padding-top: 100px; ">
         <div class="row">
-            <!-- left part -->
             <div class="col-md-7" style="border-right: 1px solid rgb(182, 179, 179);">
                 <div class="row">
                     <h1>WELCOME TO DELHI METRO INSTANT SLOT BOOKING SYSTEM</h1>
                 </div>
                 <div class="row">
-                    <img src="imgs/yellow map1.jpg" style="width: 90%;">
+                    <img src="imgs/map.jpg" style="width: 90%;">
                 </div>
-                <div class="row">
+
+            </div>
+             <div class="col-md-5" style="padding-left: 80px;">
+               <div class="row">
+               <h1 style="font-size: 60px; margin-left: 30px">Booking Portal</h1>
+               <br>
+               <br>
+               <br>
+               <br>
                     <div class="col-md-6">
-                        <form action="/api/fare/" method="POST">
+                        <form action="/api/bookings/" method="POST">
                             <div class="form-group">
                                 <label for="metroStations" style="font-weight: bold;">Select Source Station:</label>
                                 <select class="form-control" id="metroStations" name="initialStation">
@@ -100,94 +106,43 @@
                               </div>
                             <button type="button" style="width: 100%; border: 0px; background-color: rgb(236, 151, 22);"
                                 class="btn btn-primary">Calculate Fare</button>
-                        </form>
-                    </div>
+							                    </div>
                     <div class="col-md-6">
-                        <h1 style="padding: 50px; color: rgb(119, 5, 5);">&#8377 - </h1>
+                        <h1 style="padding: 50px; color: rgb(119, 5, 5);">&#8377 -</h1>
                     </div>
-
+                    
                 </div>
+                <div style="margin-top: 20px">
+                <label class="radio-inline"><input type="radio" name="optradio" checked><strong>Morning Slots</strong></label>
+               <label class="radio-inline"><input type="radio" name="optradio"><strong>Evening Slots</strong></label>
+              </div>
+              <div class="form-group">
+                                <label for="Timeslots" style="font-weight: bold;">Select Time from now(in minutes):</label>
+                                <select class="form-control" id="metroStations" name="timeddifference">
+                                  <option>5</option>
+                                  <option>10</option>
+                                  <option>15</option>
+                                  <option>20</option>
+                                  <option>25</option>
+                                  <option>30</option>
+                                  <option>35</option>
+                                  <option>40</option>
+                                  <option>45</option>
+                                  <option>50</option>
+                                  <option>55</option>
+                                  <option>60</option>
 
+                                </select>
+                              </div>
+                              <!-- <button type="button" style="width: 100%; border: 0px; background-color: rgb(236, 151, 22);"
+                                class="btn btn-primary">Check Availability</button> -->
+                                <button type="button" style="width: 100%; border: 0px; margin-top: 10px"
+                                class="btn btn-success">Confirm Booking</button>
             </div>
-            <!-- left part ends -->
-            <!-- right part -->
-            <div class="col-md-5" style="padding-left: 80px;">
-                <div class="row">
-                    <h1>LOGIN HERE TO CONTINUE</h1>
-                </div>
-                <div class="row" style="padding-top: 50px;">
-                    <form action="/login" method="POST">
-                        <div class="form-group">
-                            <label for="cardNumber" style="font-weight:bold;">Enter your card number:</label>
-                            <input type="number" name="card" class="form-control" id="cardNumber" placeholder="Card Number">
-                        </div>
-                        <div class="form-group">
-                            <label for="password" style="font-weight:bold;">Enter your password:</label>
-                            <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password">
-                        </div>
-                        <button type="submit"
-                            style="width: 100%; border: 0px ; background-color: rgb(236, 151, 22);"
-                            class="btn btn-primary">LOGIN</button>
+                        </form>
 
-                    </form>
-                </div>
-                <hr>
-                <div class="row">
-                    <p>Not yet signed up?</p>
-                </div>
-                <div class="row">
-                    <button href="#" data-target="#signUp" data-toggle="modal"
-                        style="width: 70%; border: 0px ; background-color: rgb(63, 63, 62);"
-                        class="btn btn-primary">SIGN UP</button>
-                    <!-- modal for sign up -->
-                    <div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Sign Up here</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="/register" method="POST">
-                                        <div class="form-group">
-                                            <label for="userName" style="font-weight:bold;">Enter your UserName:</label>
-                                            <input type="text" class="form-control" id="username"
-                                                placeholder="User Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cardNumber" style="font-weight:bold;">Enter your card
-                                                number:</label>
-                                            <input type="number" class="form-control" id="card"
-                                                placeholder="Card Number">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password" style="font-weight:bold;">Enter your password:</label>
-                                            <input type="password" class="form-control" id="password"
-                                                placeholder="Enter your password">
-                                        </div>
-										<button type="button" class="btn btn-primary"
-												style="border: 0px ; background-color: rgb(236, 151, 22);">Sign Up</button>
-                                    </form>
-										<div class="modal-footer">
-											
-											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-										</div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
         </div>
     </div>
 
-
 <%- include("partials/footer") %> 
+    
