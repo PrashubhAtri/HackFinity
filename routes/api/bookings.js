@@ -5,8 +5,8 @@ const config = require('config')
 
 //Functions
 const { Penalty } = require('../../utils/Bookings')
-const { GetSystemTime } = require('../../utils/SystemTime')
-const { GetAllTrains } = require('../../utils/Trains')
+// const { GetSystemTime } = require('../../utils/SystemTime')
+// const { GetAllTrains } = require('../../utils/Trains')
 
 //Models
 const User = require('../../models/User');
@@ -18,12 +18,9 @@ const route = Router();
 const CHARGEPERSTATION = config.get('CHARGEPERSTATION');
 const INTERCHANGECHARGES = config.get('INTERCHANGECHARGES');
 const PENALTY = config.get('PENALTY');
-const TRAINSTATIONS = config.get('TRAINSTATIONS');
 const TIMEINTERVAL = config.get('TIMEINTERVAL');
+const TOTALSTATIONS = config.get('TOTALSTATIONS');
 
-route.get("/", function(req,res){
-	res.render("booking");
-})
 //Post Route for Booking a Slot
 /*
     Body Requirement : {
@@ -42,19 +39,25 @@ route.post('/', [
     }
     try {
         //Train Check and Reservation
-        let initialTime = GetSystemTime();
+        let sys = await System.findOne({name : "HackFinity"})
+        let initialTime = sys.time;
         let d = new Date;
         let currentTime = d.getTime();
-        let interval = req.body.timedifference;
+        let interval = (req.body.timedifference)*60*1000;
         let TimeELapsed = parseInt((currentTime + interval - initialTime) / 60000) % 1440;
-        let Trains = GetAllTrains("yellow");
+        let Trains = await Train.find({line : "yellow"});
         if(Trains.length === 0){
             return res.send("No Trains Available")
         }
-        let Positions = Trains.map((train)=>{return((train.initTime + TimeELapsed)/TIMEINTERVAL)});
-        let Station = req.body.initialStation;
+        let Positions = Trains.map((train)=>{return(((train.initTime + TimeELapsed)/TIMEINTERVAL)%TOTALSTATIONS)});
+        let Station = 0;
         let TrainPrescribed = Positions.map((pos)=>{return(pos <= Station)}).indexOf(true);
         let TrainBooked = await Train.findOne({index : TrainPrescribed});
+        if(!TrainBooked){
+            res.send("No Train Found");
+            return
+        }
+        console.log(TrainBooked)
         if(TrainBooked.currCapacity >= TrainBooked.maxCapacity){
             res.send("Train Already at Max Capacity.")
         }
@@ -75,7 +78,6 @@ route.post('/', [
             iStation : req.body.initialStation,
             fStation : req.body.finalStation,
             fare : fare,
-			timedifference :req.body.timedifference,
             trainIdx : TrainPrescribed
         }
         user.booking.unshift(commute);
@@ -85,7 +87,12 @@ route.post('/', [
         await user.save();
         await TrainBooked.save();
         //returning Successfully on completion
-        res.send("Successfully Booked The Seat.")
+        let value = {
+            path : Data.path,
+            fare : fare,
+            train : TrainBooked.name
+        }
+        res.json(value)
     } catch (err) {
         console.error(err.message)
         return res.status(500).send("Server Error")
