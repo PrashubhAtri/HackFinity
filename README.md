@@ -6,7 +6,7 @@
 * [*Neha Goyal*](https://github.com/nehagoyal2607)
 * [*Ritvik Chawal*](https://github.com/ritvik98349)
 * [*Prashubh Atri*](https://github.com/PrashubhAtri)
-* [*Rishabh Kumar*](https://github.com/Rishabh2406)
+* [*Rishabh Gadhia*](https://github.com/Rishabh2406)
 ---
 ### [***Proposal***](https://github.com/PrashubhAtri/HackFinity/tree/master/Idea)
 ### [***Deployment***](https://dmrc.herokuapp.com/)

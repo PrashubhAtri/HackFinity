@@ -1,5 +1,5 @@
 {
-  "ClusterURI" : "mongodb+srv://admin:teamwebminers@cluster0.qgjsg.mongodb.net/test",
+  "ClusterURI" : "URI goes here",
   "CHARGEPERSTATION" : 2,
   "INTERCHANGECHARGES" : 5,
   "PENALTY" : 25,
