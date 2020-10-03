@@ -1,5 +1,5 @@
 {
-  "ClusterURI" : "mongodb://localhost:27017/hackfinity",
+  "ClusterURI" : "mongodb+srv://admin:teamwebminers@cluster0.qgjsg.mongodb.net/test",
   "CHARGEPERSTATION" : 2,
   "INTERCHANGECHARGES" : 5,
   "PENALTY" : 25,

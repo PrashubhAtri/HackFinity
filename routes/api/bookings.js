@@ -11,6 +11,7 @@ const { Penalty } = require('../../utils/Bookings')
 //Models
 const User = require('../../models/User');
 const Train = require('../../models/Trains')
+const { use } = require('passport')
 
 const route = Router();
 
@@ -147,6 +148,8 @@ route.delete('/cancel', isLoggedIn,async (req, res)=>{
         let TrainIdx = user.booking[0].trainIdx;
         let train = await Train.findOne({index : TrainIdx});
         train.currCapacity--;
+        // Returning the Fare
+        user.balance += user.booking[0].fare;
         // Unregistering the Booking
         user.booking = [];
         user.faults += 1;
