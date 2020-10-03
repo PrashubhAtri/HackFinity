@@ -1,0 +1,47 @@
+<%- include("partials/header") %> 
+
+    <div class="container" style="padding-top: 100px; ">
+        <div class="row">
+            <div class="col-md-7" style="border-right: 1px solid rgb(182, 179, 179);">
+                <div class="row">
+                    <h1>WELCOME TO DELHI METRO INSTANT SLOT BOOKING SYSTEM</h1>
+                </div>
+                <div class="row">
+                    <img src="/imgs/map.jpg" style="width: 90%;">
+                </div>
+
+            </div>
+             <div class="col-md-5" style="padding-left: 80px;">
+               <div class="row">
+               <h1 style="font-size: 60px; margin-left: 30px">Booking Portal</h1>
+               <h3 style="font-size: 60px; margin-left: 30px">Booking Confirmed</h3>
+              
+				   <div class="card text-center">
+					  <div class="card-header">
+						Booking Details
+					  </div>
+					  <div class="card-body">
+						<h5 class="card-title">Train: <%=newf.train%></h5>
+						<p class="card-text">Initial Station: <%=newf.iStation%></p>
+						<p class="card-text">Final Station: <%=newf.fStation%></p>
+						<p class="card-text">Fare: &#8377 <%=newf.fare%></p>
+						<p class="card-text">Stations: <%=newf.path%></p>
+						<a href="/show/<%=currentUser._id%>" class="btn btn-primary">Go to profile</a>
+					  </div>
+					  <div class="card-footer text-muted">
+						Happy travelling..
+					  </div>
+					</div>
+               <br>
+               <br>
+               <br>
+               <br>
+                   
+					
+			</div>
+
+        </div>
+    </div>
+
+<%- include("partials/footer") %> 
+    

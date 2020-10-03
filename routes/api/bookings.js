@@ -29,7 +29,18 @@ const TOTALSTATIONS = config.get('TOTALSTATIONS');
         timedifference : the time after the current time the slot is needed,
     }
 */
-route.get("/", function(req,res){
+
+//middleware
+function isLoggedIn(req,res,next){
+	if(req.isAuthenticated()){
+		return next()
+	}else{
+		req.flash("error", "You need to be logged in to do that.")
+		res.redirect('/login');
+	}
+}
+
+route.get("/", isLoggedIn,function(req,res){
 	res.render("booking");
 })
 route.post('/', [
@@ -38,7 +49,8 @@ route.post('/', [
 ],async (req, res)=>{
     const errors = validationResult(req)
     if(!errors.isEmpty()){
-        return res.status(400).json({errors:errors.array()})
+		req.flash("error", "Server Error.");
+        return res.status(400).redirect("back");
     }
     try {
         //Train Check and Reservation
@@ -50,25 +62,28 @@ route.post('/', [
         let TimeELapsed = parseInt((currentTime + interval - initialTime) / 60000) % 1440;
         let Trains = await Train.find({line : "yellow"});
         if(Trains.length === 0){
-            return res.send("No Trains Available")
+            return res.flash("error","No Trains Available");
         }
         let Positions = Trains.map((train)=>{return(((train.initTime + TimeELapsed)/TIMEINTERVAL)%TOTALSTATIONS)});
         let Station = 0;
         let TrainPrescribed = Positions.map((pos)=>{return(pos <= Station)}).indexOf(true);
         let TrainBooked = await Train.findOne({index : TrainPrescribed});
         if(!TrainBooked){
-            res.send("No Train Found");
+			req.flash("error", "No Train Found");
             return
         }
         console.log(TrainBooked)
         if(TrainBooked.currCapacity >= TrainBooked.maxCapacity){
-            res.send("Train Already at Max Capacity.")
+			req.flash("error", "Train already at max capacity");
+            // res.send("Train Already at Max Capacity.")
         }
         TrainBooked.currCapacity++;
         //Getting the user
         let user = await User.findById(req.user.id);
         if(!user){
-            return res.send("User Not Found");
+			req.flash("error", "User not found.");
+			return res.redirect("back");
+            // return res.send("User Not Found");
         }
         //Registering the booking and calculating the fare
         const uri = encodeURI(
@@ -84,7 +99,9 @@ route.post('/', [
             trainIdx : TrainPrescribed
         }
         if(user.booking.length > 0) {
-            return res.send("Not Allowed more than one bookings at a time.")
+			req.flash("error", "Not allowed more than one booking at a time");
+			return res.redirect("back");
+            // return res.send("Not Allowed more than one bookings at a time.")
         }
         user.booking.unshift(commute);
         //Deducting the Fare
@@ -96,12 +113,16 @@ route.post('/', [
         let value = {
             path : Data.path,
             fare : fare,
-            train : TrainBooked.name
+            train : TrainBooked.name,
+			iStation : req.body.initialStation,
+            fStation : req.body.finalStation 
         }
-        res.json(value)
+        res.render("success", {newf:value});
     } catch (err) {
         console.error(err.message)
-        return res.status(500).send("Server Error")
+		req.flash("error", "Server Error");
+		res.redirect("back")
+        // return res.status(500).send("Server Error")
     }
 })
 
@@ -109,12 +130,13 @@ route.post('/', [
 /*
     Body Requirement : None
 */
-route.delete('/cancel', async (req, res)=>{
+route.delete('/cancel', isLoggedIn,async (req, res)=>{
     try {
         //Getting the user
         let user = await User.findById(req.user.id);
         if(!user){
-            return res.send("User Not Found");
+            req.flash("error", "User not found.");
+			return res.redirect("back");
         }
         //Checking for Penalty
         let guilty = Penalty(user.faults);
@@ -131,9 +153,13 @@ route.delete('/cancel', async (req, res)=>{
         //Saving the changes to DataBase
         await user.save();
         await train.save();
+		req.flash("success", "Cancelled Booking successfully.")
+		res.redirect("/show/"+req.user._id);
     } catch (err) {
         console.error(err.message)
-        return res.status(500).send("Server Error")
+		req.flash("error", "User not found.");
+		return res.redirect("back");
+        // return res.status(500).send("Server Error")
     }
 })
 

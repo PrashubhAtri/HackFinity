@@ -16,6 +16,8 @@ const INTERCHANGECHARGES = config.get('INTERCHANGECHARGES');
         finalStation : the Ending Station of the Journey,
     }
 */
+
+
 route.get("/:fareamt", (req,res)=>{
 	// res.send("hi");
 	res.render("fare",{fare:req.params.fareamt});
@@ -26,7 +28,8 @@ route.post('/', [
 ],async (req, res)=>{
     const errors = validationResult(req)
     if(!errors.isEmpty()){
-        return res.status(400).json({errors:errors.array()})
+		req.flash("error", "Server Error.");
+        return res.status(400).redirect("back");
     }
     try {
         //Calculating the fare
@@ -36,10 +39,12 @@ route.post('/', [
         const MetroResponse = await axios.get(uri);
         const Data = MetroResponse.data;
         let fare = CHARGEPERSTATION*(Data.path.length) + INTERCHANGECHARGES*(Data.interchange.length);
+		req.flash("success", "Successfully calculated fare.");
         res.redirect("/api/fare/"+fare);
     } catch (err) {
         console.error(err.message)
-        return res.status(500).send("Server Error")
+		req.flash("error", "Server Error.");
+        return res.status(500)
     }
 })
 
