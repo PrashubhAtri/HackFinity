@@ -9,7 +9,7 @@
 * [*Rishabh Kumar*](https://github.com/Rishabh2406)
 ---
 ### [***Proposal***](https://github.com/PrashubhAtri/HackFinity/tree/master/Idea)
-### [***Deployment***]()
+### [***Deployment***](https://dmrc.herokuapp.com/)
 ### [***Code***](https://github.com/PrashubhAtri/HackFinity)
 ---
 ### Requirements :
@@ -30,5 +30,5 @@
     ```
     node server
     ```
-6. The App Shall now be running on [PORT = 3000(default)](http://localhost:300)
+6. The App Shall now be running on [PORT = 5555(default)](http://localhost:5555)
 ---
