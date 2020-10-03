@@ -26,10 +26,22 @@
 				<% if(!currentUser){ %>
 					<li class="nav-item"><a href="/login" style="margin:10px;">Login</a></li>
 				<%}else{%>
-				  <li class="nav-item"><a href="#" style="margin:10px;">Signed In As <%=currentUser.username%></a></li>
+				  <li class="nav-item"><a href="/show/<%=currentUser._id%>" style="margin:10px;">Signed In As <%=currentUser.username%></a></li>
 					<li class="nav-item"><a href="/logout" style="margin:10px;">Logout</a></li>
 				<%}%>
 			  </ul>
 			</div>
     </nav>
-	
+	<div class="container">
+			<%if(error && error.length > 0){%>
+				<div class="alert alert-danger" role="alert">
+					<%= error %>
+				</div>
+			<%}%>
+			<%if(success && success.length > 0){%>
+				<div class="alert alert-success" role="alert">
+					<%= success %>
+				</div>
+			<%}%>
+			
+		</div>

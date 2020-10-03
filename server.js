@@ -1,7 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const config = require('config')
+const config = require('config');
+const methodOverride = require("method-override");
+const flash = require("connect-flash");
 
 const app = express();
 
@@ -43,7 +45,8 @@ app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname+"/public"));
 app.use(express.json())
-
+app.use(methodOverride('_method'));
+app.use(flash());
 //auth config
 app.use(session({
 	secret:"HackFinity",
@@ -56,23 +59,35 @@ passport.use(new LocalStrategy({usernameField:'card'},User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req,res,next) => {
+app.use(function(req,res,next){
 	res.locals.currentUser = req.user;
+	res.locals.error = req.flash("error");
+	res.locals.success = req.flash("success");
 	next();
 })
-
+//middleware
+function isLoggedIn(req,res,next){
+	if(req.isAuthenticated()){
+		return next()
+	}else{
+		req.flash("error", "You need to be logged in to do that.")
+		res.redirect('/login');
+	}
+}
 //Base Display Route
 app.get("/",(req,res) => {
 	res.render("home",{currentUser:req.user});
 })
 
 //Register Routes
-app.get("/show/:id",(req,res) => {
+app.get("/show/:id",isLoggedIn,(req,res) => {
 	User.findById(req.params.id,function(err,user){
 		if(err){
 			console.log(err);
+			req.flash("error", "Sorry.User not found.")
 			res.redirect("/");
 		}else{
+			req.flash("success", "Welcome to Delhi Metro Booking Portal, "+ user.username);
 			res.render("profile",{user:user});
 		}
 	})
@@ -82,9 +97,15 @@ app.post("/register",(req,res) => {
 	User.register(newUser, req.body.password, (err,user) => {
 		if(err){
 			console.log(err);
+			if(err.message=="A user with the given username is already registered"){
+				req.flash("error", "A user with the given card number is already registered");
+			}else{
+				req.flash("error", err.message);
+			}
 			return res.redirect("/")
 		}
 		passport.authenticate("local")(req,res,() => {
+			req.flash("success", "Successfully registered");
 			res.redirect("/show/"+user._id);
 		})
 	})
@@ -92,11 +113,14 @@ app.post("/register",(req,res) => {
 
 //LOGIN ROUTES
 app.get("/login",(req,res) => {
+	req.flash("success", "Welcome to Delhi Metro Booking Portal.");
 	res.render("home")
 });
 app.post("/login",passport.authenticate("local",{
+	failureFlash : "Oops..Authentication failed",
 	failureRedirect:"/"
 	}),(req,res) => {
+	req.flash("success", "Successfully logged in.");
 	res.redirect("/show/"+req.user._id);
 	});
 // app.get("/profile",(req,res)=>{
@@ -105,6 +129,7 @@ app.post("/login",passport.authenticate("local",{
 //LOGOUT ROUTES
 app.get("/logout",(req,res) => {
 	req.logout();
+	req.flash("success", "Successfully logged out.");
 	res.redirect("/");
 })
 

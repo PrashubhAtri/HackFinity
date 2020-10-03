@@ -151,7 +151,14 @@
                                 </div>
                                 <div class="modal-footer">
                                   <button  class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <button  class="btn btn-primary" style="background-color: red;">Cancel Booking</button>
+									<form action="/api/bookings/cancel/?_method=DELETE" method="POST">
+										<%if(user.booking.length > 0){%>
+											<button  class="btn btn-danger">Cancel Booking</button>
+										<%}else{%>
+											<button  class="btn btn-secondary" disabled>Cancel Booking</button>
+										<%}%>
+									</form>
+                                  <button  class="btn btn-light"><a href="/show/<%=currentUser._id%>">Go to Profile</a></button>
                                 </div>
                               </div>
                             </div>
